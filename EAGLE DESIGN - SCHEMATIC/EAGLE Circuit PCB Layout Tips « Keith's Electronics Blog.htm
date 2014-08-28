@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0055)http://www.neufeld.newton.ks.us/electronics/?page_id=81 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US"><HEAD profile="http://gmpg.org/xfn/11"><META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<TITLE>EAGLE Circuit/PCB Layout Tips «  Keith's Electronics Blog</TITLE>
+
+<LINK rel="stylesheet" href="./EAGLE Circuit PCB Layout Tips « Keith's Electronics Blog_files/style.css" type="text/css" media="screen">
+<LINK rel="pingback" href="http://www.neufeld.newton.ks.us/electronics/xmlrpc.php">
+
+<STYLE type="text/css" media="screen">
+
+	#page { background: url("http://www.neufeld.newton.ks.us/electronics/wp-content/themes/default/images/kubrickbg-ltr.jpg") repeat-y top; border: none; }
+
+</STYLE>
+
+
+<LINK rel="alternate" type="application/rss+xml" title="Keith&#39;s Electronics Blog &raquo; Feed" href="http://www.neufeld.newton.ks.us/electronics/?feed=rss2">
+<LINK rel="alternate" type="application/rss+xml" title="Keith&#39;s Electronics Blog &raquo; Comments Feed" href="http://www.neufeld.newton.ks.us/electronics/?feed=comments-rss2">
+<LINK rel="alternate" type="application/rss+xml" title="Keith&#39;s Electronics Blog &raquo; EAGLE Circuit/PCB Layout Tips Comments Feed" href="http://www.neufeld.newton.ks.us/electronics/?feed=rss2&page_id=81">
+<SCRIPT type="text/javascript" src="./EAGLE Circuit PCB Layout Tips « Keith's Electronics Blog_files/comment-reply.js"></SCRIPT>
+<LINK rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.neufeld.newton.ks.us/electronics/xmlrpc.php?rsd">
+<LINK rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.neufeld.newton.ks.us/electronics/wp-includes/wlwmanifest.xml"> 
+<LINK rel="index" title="Keith&#39;s Electronics Blog" href="http://www.neufeld.newton.ks.us/electronics">
+<LINK rel="up" title="Tips and Techniques" href="http://www.neufeld.newton.ks.us/electronics/?page_id=168">
+<META name="generator" content="WordPress 2.8.4">
+<STYLE type="text/css">#wpcf fieldset { padding: 10px; border: 1px solid #666666; width: 400px; margin: auto }
+#wpcf legend { font-weight: bold: border: 1px solid #666666; padding: 3px }
+#wpcf label { display: block; float: left; text-align: right; width: 140px; padding-right: 10px; font-size: 100% }
+#wpcf p { margin: 0 0 7px 0 }
+#wpcf .field { font-size: 100%; width: 240px; padding: 0; margin: 0 }
+#wpcf p.button { text-align: right; padding: 0 5px 0 0; }
+#wpcf textarea { font-size: 100%; width: 400px; height: 150px }
+#wpcf .error { background-color: #FFFF00 }
+#wpcf .challenge { font-size: 100%; display: inline-block; display: -moz-inline-stack; text-align: left; width: 240px }
+#wpcf p.alert { color:#FF0000; font-weight: 700; text-align: center; padding: 5px 0 10px 0 }</STYLE></HEAD><BODY class="page page-id-81 page-child parent-pageid-168 page-template page-template-default">
+<DIV id="page">
+
+
+<DIV id="header" role="banner">
+	<DIV id="headerimg">
+		<H1><A href="http://www.neufeld.newton.ks.us/electronics/">Keith's Electronics Blog</A></H1>
+		<DIV class="description"></DIV>
+	</DIV>
+</DIV>
+<HR>
+
+	<DIV id="content" class="narrowcolumn" role="main">
+
+				<DIV class="post" id="post-81">
+		<H2>EAGLE Circuit/PCB Layout Tips</H2>
+			<DIV class="entry">
+				<P>These notes are mainly for myself, as reminders for how to do operations I just learned or tend to forget.</P>
+<H3>Supply</H3>
+<P><STRONG>What’s up with GND and GNDA and AGND?  How do I tie them together?</STRONG>  I need to write a more complete answer about why EAGLE has different grounds and <EM>where</EM> to tie them together.</P>
+<P>Meanwhile, the short answer is to insert the GND-GNDA component from the supply1 library, (apparently) tie GND-GNDA’s GND to GND and GNDA to AGND or whatever you’re using, and then follow <A href="http://forum.sparkfun.com/viewtopic.php?p=39977&sid=015c96abc42c025dd6079ff2e79d94b5">these instructions on a SparkFun forum</A> to activate layers 53 and 54 to make a jumper appear in a new later on your board connecting the two.</P>
+<P><STRONG>How do I connect power supply and ground pins on ICs?</STRONG>  EAGLE is supposed to connect them automatically, but that seems to depend somewhat on using the right supply symbols.  If you need to connect them manually, use INVOKE (the button with four AND gates and an arrow, just above the T for text button) and click on one of the gates.  You get a popup window listing different gates and the power connections; pick the power and place it on your schematic.</P>
+<H3>General Editing</H3>
+<P><STRONG>How do I copy a group of objects?</STRONG>  For some reason, the Copy tool doesn’t work on a group, but the Cut tool copies the group to the clipboard to be pasted.  (Grrr.)</P>
+<P>Select the objects with the Group (dotted rectangle) tool, then pick Cut off the Edit menu and click on any highlighted object, then pick Paste off the Edit menu and you should have a floating collection that you can position and anchor (click).</P>
+<H3>Libraries</H3>
+<P>What’s up with no libraries being loaded in EAGLE version 5?  <STRONG>How do I get libraries into my list for adding parts?</STRONG>  EAGLE 5 starts with no parts libraries loaded, and you need to load the ones you want by selecting Library / Use… and then picking them one at a time.  You can also preload <EM>all</EM> libraries like EAGLE 4 (at least my copy) did by default, by typing <CODE>USE *</CODE> in the command box in the edit window.</P>
+<H3>Layers</H3>
+<P><STRONG>How do I make a single-sided PCB?</STRONG>  Go into the Design Rule Checker (DRC tool), pick the Layers tab, and change the setup from <CODE>(1*16)</CODE> to <CODE>1</CODE>.  To change it back to a two-sided PCB, change the setup back to <CODE>(1*16)</CODE> and change the Nr 16 Copper back to <CODE>.035mm</CODE>.</P>
+<P><STRONG>How do I make a single-sided PCB with a few jumpers?</STRONG>  For <EM>home production</EM> of a single-sided board with a few component-side jumpers, make a two-sided board, only produce the bottom side, drill the vias as component pads <EM>[need to check what shows up in the drill file]</EM> and stuff jumpers where the top-side traces would go.</P>
+<P><STRONG>How do I change layers while routing a trace?</STRONG>  With a three-button mouse, use the middle button to change layers while routing traces.  With a two-button mouse, click to set a waypoint, go up and change the layer in the drop-down box (don’t worry about the weird rubber-band trace that follows your mouse around while you’re doing it), and EAGLE should automatically insert a via, from which you can continue routing.</P>
+<P><STRONG>How do I delete a via?</STRONG>  Use the Ripup tool to delete vias.  The X it leaves behind will disappear after the next routing operation (on that trace? at all?) or the next time you click Ratsnest.</P>
+<H3>Pads</H3>
+<P><STRONG>How do I change pad shapes?</STRONG>  I don’t like the default oval pads on header connectors.  Go into the Tools, DRC, Shapes, Pads, and change Top and Bottom from “As In Library” to “Round.”</P>
+<P><STRONG>How do I change pad sizes globally?</STRONG>  Go into Tools, DRC, Restring, and set the Pads or Vias minimum sizes to the desired radius or diameter.</P>
+<P><STRONG>How do I change the drill size globally?</STRONG>  Many of the library parts seem to have ridiculously large drill holes.  For a homebrew board or hand-drilling, click the ULP, pick <CODE>drill-aid.ulp</CODE>, and enter the new drill diameter (in mm).  EAGLE will add a white ring inside each hole in a new layer 116.</P>
+<H3>New Components</H3>
+<P>Sparkfun has the best tuturial I’ve found on making new library parts.</P>
+<P><A href="http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=110">http://www.sparkfun.com/commerce/tutorial_info.php?tutorials_id=110</A></P>
+<P>This tutorial has a great description of copying components and packages from existing libraries.  I always forget to click on the group after selecting the Cut tool!</P>
+<P><A href="http://myhome.spu.edu/bolding/EE4211/EagleTutorial4.htm">http://myhome.spu.edu/bolding/EE4211/EagleTutorial4.htm</A></P>
+<H3>Panelizing</H3>
+<P>The second Q/A has a good description of how to panelize.</P>
+<P><A href="http://www.precma.com/informatica/EAGLE_faq_various.htm">http://www.precma.com/informatica/EAGLE_faq_various.htm</A></P>
+<P>It boils down to this:</P>
+<UL>
+<LI>If you want silkscreen part numbers preserved (instead of auto-incremented), run panelize.ulp to copy them to a different layer.</LI>
+<LI>Close your schematic and work only in the board.  (At this point I save my board under a different name to indicate that it’s a panelized version only, not for editing.)</LI>
+<LI>Enable all layers that have elements you want duplicated in the panelization.</LI>
+<LI>Select everything and use the Cut tool (I pick it off the menu) to copy everything to the clipboard, <EM>remembering to click once more to select the “grab point.”</EM></LI>
+<LI>Select Paste, and paste away.</LI>
+</UL>
+<H3>CAM</H3>
+<P><STRONG>How do I produce a drill file?</STRONG></P>
+<P>Run the CAM processor:  File / CAM Processor.  Pick Excellon for the Output Device type, and enter the output filename (<CODE>foo.drd</CODE>) in the File box.  Not necessary on my Linux workstation running a current version of EAGLE:  Enter an X offset of <CODE>-.0373inch</CODE> and a Y offset of <CODE>-.0353inch</CODE>.  (I have no idea why, nor why they immediately translate into <CODE>-0.9474mm</CODE> and <CODE>-0.8.966mm</CODE>.</P>
+<HR>
+<H3>Initial Setup to Generate Drill Files for DanCAM</H3>
+<P>The default Excellon drill file output is formatted a little differently than what’s required by DanCAM, the software on my friend Joel’s drilling machine.  To fix the output format, I started with the instructions at <A href="http://www.sparkfun.com/cgi-bin/phpbb/viewtopic.php?t=1350">Spark Fun’s forum on fixing EAGLE output</A>.</P>
+<P>I found the <CODE>eagle.def</CODE> file, which on my Mac was at <CODE>/Applications/EAGLE-X11/bin/eagle.def</CODE> (Linux <CODE>/opt/eagle/bin/eagle.def</CODE>).  Within the file, I found the definition for Excellon, which looked like this:</P>
+<BLOCKQUOTE><PRE>[EXCELLON]
+
+Type     = DrillStation
+Long     = "Excellon drill station"
+Init     = "%%\nM48\nM72\n"
+Reset    = "M30\n"
+ResX     = 10000
+ResY     = 10000
+;Rack     = ""
+DrillSize  = "%sC%0.4f\n"        ; (Tool code, tool size)
+AutoDrill  = "T%02d"             ; (Tool number)
+FirstDrill = 1
+BeginData  = "%%\n"
+Units    = Inch
+Select   = "%s\n"                ; (Drill code)
+Drill    = "X%1.0fY%1.0f\n"      ; (x, y)
+Info     = "Drill File Info:\n"\
+           "\n"\
+           " Data Mode         : Absolute\n"\
+           " Units             : 1/10000 Inch\n"\
+           "\n"
+</PRE>
+</BLOCKQUOTE>
+<P>I duplicated it to a new definition called <CODE>DANCAM</CODE>, and made three changes:</P>
+<UL>
+<LI>The <CODE>Long</CODE> name for the new CAM type is <CODE>DanCAM drill station</CODE>.
+	</LI>
+<LI>DanCAM doesn’t want the <CODE>%</CODE> as the first line of the file, so I removed the <CODE>%%</CODE> from the <CODE>Init</CODE> string.</LI>
+<LI>DanCAM wants X/Y coordinates to be six digits (with leading zeroes): three digits of inches and three digits of thousandths (mils).  So I changed the formats in the <CODE>Drill</CODE> string from <CODE>%1.0f</CODE> to <CODE>%06.0f</CODE>.</LI>
+</UL>
+<P>After the changes, the new DANCAM entry looked like this:</P>
+<BLOCKQUOTE><PRE>[DANCAM]
+
+Type     = DrillStation
+Long     = "DanCAM drill station"
+Init     = "M48\nM72\n"
+Reset    = "M30\n"
+ResX     = 10000
+ResY     = 10000
+;Rack     = ""
+DrillSize  = "%sC%0.4f\n"        ; (Tool code, tool size)
+AutoDrill  = "T%02d"             ; (Tool number)
+FirstDrill = 1
+BeginData  = "%%\n"
+Units    = Inch
+Select   = "%s\n"                ; (Drill code)
+Drill    = "X%06.0fY%06.0f\n"      ; (x, y)
+Info     = "Drill File Info:\n"\
+           "\n"\
+           " Data Mode         : Absolute\n"\
+           " Units             : 1/10000 Inch\n"\
+           "\n"
+</PRE>
+</BLOCKQUOTE>
+<P>EAGLE graciously picked up the new definition each time I made a change, which was handy, as I went through several iterations to get the X/Y format right.</P>
+<P>I haven’t had a chance to try the new format on the drill machine yet, but I’m pretty confident it now matches the files I’ve been hand-manipulating to get them to work.</P>
+
+				
+			</DIV>
+		</DIV>
+				</DIV>
+
+	<DIV id="sidebar" role="complementary">
+		<UL>
+						<LI>
+				<FORM method="get" id="searchform" action="http://www.neufeld.newton.ks.us/electronics/">
+<DIV><INPUT type="text" value="" name="s" id="s">
+<INPUT type="submit" id="searchsubmit" value="Search">
+</DIV>
+</FORM>
+			</LI>
+
+			
+			<!-- Author information is disabled per default. Uncomment and fill in your details if you want to use it.
+			<li><h2>Author</h2>
+			<p>A little something about you, the author. Nothing lengthy, just an overview.</p>
+			</li>
+			-->
+
+					</UL>
+		<UL role="navigation">
+			
+			<LI class="pagenav"><H2>Pages</H2><UL><LI class="page_item page-item-242"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=242" title="Contact Me">Contact Me</A></LI>
+<LI class="page_item page-item-249"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=249" title="Downloads">Downloads</A>
+<UL>
+	<LI class="page_item page-item-240"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=240" title="Free Circuits">Free Circuits</A></LI>
+</UL>
+</LI>
+<LI class="page_item page-item-115"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=115" title="Introduction to Circuits">Introduction to Circuits</A></LI>
+<LI class="page_item page-item-85"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=85" title="LED Clock">LED Clock</A></LI>
+<LI class="page_item page-item-23"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=23" title="LogoChip">LogoChip</A>
+<UL>
+	<LI class="page_item page-item-24"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=24" title="LogoChip: Curiously Strong">LogoChip: Curiously Strong</A></LI>
+</UL>
+</LI>
+<LI class="page_item page-item-174"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=174" title="Projects">Projects</A>
+<UL>
+	<LI class="page_item page-item-110"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=110" title="My Projects and To-Dos">My Projects and To-Dos</A></LI>
+	<LI class="page_item page-item-175"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=175" title="Speaker Power Detector">Speaker Power Detector</A></LI>
+</UL>
+</LI>
+<LI class="page_item page-item-60"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=60" title="Replacing My PowerBook Screen">Replacing My PowerBook Screen</A></LI>
+<LI class="page_item page-item-18"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=18" title="Resources">Resources</A></LI>
+<LI class="page_item page-item-51"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=51" title="Roomba Repair">Roomba Repair</A>
+<UL>
+	<LI class="page_item page-item-52"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=52" title="Repairing Roomba Original">Repairing Roomba Original</A></LI>
+</UL>
+</LI>
+<LI class="page_item page-item-168 current_page_ancestor current_page_parent"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=168" title="Tips and Techniques">Tips and Techniques</A>
+<UL>
+	<LI class="page_item page-item-119"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=119" title="Converting EAGLE Netlists to PADS for FreePCB">Converting EAGLE Netlists to PADS for FreePCB</A></LI>
+	<LI class="page_item page-item-81 current_page_item"><A href="./EAGLE Circuit PCB Layout Tips « Keith's Electronics Blog_files/EAGLE Circuit PCB Layout Tips « Keith's Electronics Blog.htm" title="EAGLE Circuit/PCB Layout Tips">EAGLE Circuit/PCB Layout Tips</A></LI>
+	<LI class="page_item page-item-157"><A href="http://www.neufeld.newton.ks.us/electronics/?page_id=157" title="PCB Design and Construction Tips">PCB Design and Construction Tips</A></LI>
+</UL>
+</LI>
+</UL></LI>
+			<LI><H2>Archives</H2>
+				<UL>
+					<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=201006" title="June 2010">June 2010</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=201005" title="May 2010">May 2010</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=201004" title="April 2010">April 2010</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=201003" title="March 2010">March 2010</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=201002" title="February 2010">February 2010</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=201001" title="January 2010">January 2010</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200912" title="December 2009">December 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200911" title="November 2009">November 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200909" title="September 2009">September 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200908" title="August 2009">August 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200906" title="June 2009">June 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200905" title="May 2009">May 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200904" title="April 2009">April 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200903" title="March 2009">March 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200902" title="February 2009">February 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200901" title="January 2009">January 2009</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200812" title="December 2008">December 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200811" title="November 2008">November 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200810" title="October 2008">October 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200809" title="September 2008">September 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200808" title="August 2008">August 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200807" title="July 2008">July 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200806" title="June 2008">June 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200805" title="May 2008">May 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200804" title="April 2008">April 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200803" title="March 2008">March 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200802" title="February 2008">February 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200801" title="January 2008">January 2008</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200712" title="December 2007">December 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200711" title="November 2007">November 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200710" title="October 2007">October 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200709" title="September 2007">September 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200708" title="August 2007">August 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200707" title="July 2007">July 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200706" title="June 2007">June 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200705" title="May 2007">May 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200704" title="April 2007">April 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200702" title="February 2007">February 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200701" title="January 2007">January 2007</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200610" title="October 2006">October 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200609" title="September 2006">September 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200608" title="August 2006">August 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200607" title="July 2006">July 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200606" title="June 2006">June 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200605" title="May 2006">May 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200604" title="April 2006">April 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200603" title="March 2006">March 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200602" title="February 2006">February 2006</A></LI>
+	<LI><A href="http://www.neufeld.newton.ks.us/electronics/?m=200601" title="January 2006">January 2006</A></LI>
+				</UL>
+			</LI>
+
+			<LI class="categories"><H2>Categories</H2><UL>	<LI class="cat-item cat-item-17"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=17" title="View all posts filed under Arcade">Arcade</A> (1)
+</LI>
+	<LI class="cat-item cat-item-9"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=9" title="View all posts filed under Arduino">Arduino</A> (25)
+</LI>
+	<LI class="cat-item cat-item-22"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=22" title="View all posts filed under Audio">Audio</A> (10)
+</LI>
+	<LI class="cat-item cat-item-6"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=6" title="View all posts filed under Circuits">Circuits</A> (23)
+</LI>
+	<LI class="cat-item cat-item-10"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=10" title="View all posts filed under CNC">CNC</A> (38)
+</LI>
+	<LI class="cat-item cat-item-26"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=26" title="View all posts filed under EAGLE">EAGLE</A> (1)
+</LI>
+	<LI class="cat-item cat-item-19"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=19" title="View all posts filed under Equipment">Equipment</A> (15)
+</LI>
+	<LI class="cat-item cat-item-11"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=11" title="View all posts filed under Hacks">Hacks</A> (24)
+</LI>
+	<LI class="cat-item cat-item-15"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=15" title="View all posts filed under Ideas">Ideas</A> (14)
+</LI>
+	<LI class="cat-item cat-item-13"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=13" title="View all posts filed under Inside">Inside</A> (40)
+</LI>
+	<LI class="cat-item cat-item-8"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=8" title="View all posts filed under LED Clock">LED Clock</A> (31)
+</LI>
+	<LI class="cat-item cat-item-14"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=14" title="View all posts filed under LED Puck">LED Puck</A> (14)
+</LI>
+	<LI class="cat-item cat-item-27"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=27" title="View all posts filed under LEDs">LEDs</A> (2)
+</LI>
+	<LI class="cat-item cat-item-5"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=5" title="View all posts filed under LogoChip">LogoChip</A> (41)
+</LI>
+	<LI class="cat-item cat-item-24"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=24" title="View all posts filed under MakerBot CupCake">MakerBot CupCake</A> (26)
+</LI>
+	<LI class="cat-item cat-item-3"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=3" title="View all posts filed under Miscellaneous">Miscellaneous</A> (49)
+</LI>
+	<LI class="cat-item cat-item-25"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=25" title="View all posts filed under Products">Products</A> (7)
+</LI>
+	<LI class="cat-item cat-item-29"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=29" title="View all posts filed under Q&amp;A">Q&amp;A</A> (1)
+</LI>
+	<LI class="cat-item cat-item-7"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=7" title="View all posts filed under Repairs">Repairs</A> (40)
+</LI>
+	<LI class="cat-item cat-item-2"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=2" title="View all posts filed under Robotics">Robotics</A> (22)
+</LI>
+	<LI class="cat-item cat-item-21"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=21" title="View all posts filed under Roomba">Roomba</A> (5)
+</LI>
+	<LI class="cat-item cat-item-18"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=18" title="View all posts filed under Salvage">Salvage</A> (20)
+</LI>
+	<LI class="cat-item cat-item-20"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=20" title="View all posts filed under Slim">Slim</A> (9)
+</LI>
+	<LI class="cat-item cat-item-4"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=4" title="Technology: Art and Sound by Design">TechArt</A> (37)
+</LI>
+	<LI class="cat-item cat-item-1"><A href="http://www.neufeld.newton.ks.us/electronics/?cat=1" title="View all posts filed under Uncategorized">Uncategorized</A> (4)
+</LI>
+</UL></LI>		</UL>
+		<UL>
+							<LI id="linkcat-12" class="linkcat"><H2>Blogroll</H2>
+	<UL class="xoxo blogroll">
+<LI><A href="http://cratel.wichita.edu/cratel/TASD2009">Technology: Art and Sound by Design 2009</A></LI>
+
+	</UL>
+</LI>
+
+				<LI><H2>Meta</H2>
+				<UL>
+										<LI><A href="http://www.neufeld.newton.ks.us/electronics/wp-login.php">Log in</A></LI>
+					<LI><A href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <ABBR title="eXtensible HyperText Markup Language">XHTML</ABBR></A></LI>
+					<LI><A href="http://gmpg.org/xfn/"><ABBR title="XHTML Friends Network">XFN</ABBR></A></LI>
+					<LI><A href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</A></LI>
+									</UL>
+				</LI>
+			
+					</UL>
+	</DIV>
+
+
+
+<HR>
+<DIV id="footer" role="contentinfo">
+<!-- If you'd like to support WordPress, having the "powered by" link somewhere on your blog is the best way; it's our only promotion or advertising. -->
+	<P>
+		Keith's Electronics Blog is proudly powered by
+		<A href="http://wordpress.org/">WordPress</A>
+		<BR><A href="http://www.neufeld.newton.ks.us/electronics/?feed=rss2">Entries (RSS)</A>
+		and <A href="http://www.neufeld.newton.ks.us/electronics/?feed=comments-rss2">Comments (RSS)</A>.
+		<!-- 19 queries. 0.632 seconds. -->
+	</P>
+</DIV>
+</DIV>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		
+
+</BODY></HTML>
